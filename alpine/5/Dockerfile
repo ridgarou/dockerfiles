@@ -28,7 +28,7 @@ RUN --mount=target=/var/www/app/node_modules,type=cache \
     && mv /var/www/app/public $BAK_PUBLIC_PATH  
 
 # Prepare php image
-FROM php:${PHP_VERSION}-fpm-alpine3.13 as prod
+FROM php:${PHP_VERSION}-fpm-alpine3.14 as prod
 
 LABEL maintainer="David Bomba <turbo124@gmail.com>"
 
@@ -50,9 +50,7 @@ RUN install-php-extensions \
     @composer \
     && rm /usr/local/bin/install-php-extensions
 
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" > /etc/apk/repositories  \
-    echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories  \
-    apk update
+RUN apk update
 
 # Install chromium
 RUN set -eux; \
